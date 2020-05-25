@@ -678,10 +678,31 @@ function($compile, $parse, $document, $rootScope, $position, dateFilter, datePar
         }
       }
 
+      function maxDateValidator(modelValue, viewValue) {
+        var value = modelValue || viewValue;
+        if(angular.isDate(value) && angular.isDate(scope.watchData.maxDate)) {
+            return value <= scope.watchData.maxDate;
+        }
+
+        return true;
+      }
+
+      function minDateValidator(modelValue, viewValue) {
+        var value = modelValue || viewValue;
+        if(angular.isDate(value) && angular.isDate(scope.watchData.minDate)) {
+            return value >= scope.watchData.minDate;
+        }
+
+        return true;
+      }
+      
+
       if (!isHtml5DateInput) {
         // Internal API to maintain the correct ng-invalid-[key] class
         ngModel.$$parserName = 'date';
         ngModel.$validators.date = validator;
+        ngModel.$validators.maxDate = maxDateValidator;
+        ngModel.$validators.minDate = minDateValidator;
         ngModel.$parsers.unshift(parseDate);
         ngModel.$formatters.push(function(value) {
           scope.date = value;
