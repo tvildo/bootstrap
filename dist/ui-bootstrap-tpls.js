@@ -1200,7 +1200,7 @@ angular.module('ui.bootstrap.datepicker', ['ui.bootstrap.dateparser', 'ui.bootst
     this.activeDate = $scope.$parent.$eval($attrs.initDate) || new Date();
     $scope.$parent.$watch($attrs.initDate, function(initDate) {
       if (initDate && (ngModelCtrl.$isEmpty(ngModelCtrl.$modelValue) || ngModelCtrl.$invalid)) {
-        self.activeDate = initDate;
+        self.activeDate = new Date(initDate);
         self.refreshView();
       }
     });
